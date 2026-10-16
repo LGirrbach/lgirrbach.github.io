@@ -2,6 +2,14 @@
 layout: default
 ---
 
-<div class="home">
+<div class="home glass-container">
     {{ content }}
 </div>
+
+<script>
+    // Open links in the page content in a new tab.
+    document.querySelectorAll('.home a[href]').forEach(function (link) {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+    });
+</script>

@@ -4,24 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} - {{ site.title }}</title>
-    <link rel="stylesheet" type="text/css" href="/assets/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/styles/main.css' | relative_url }}">
+    <script>
+        // Apply the saved theme before rendering to avoid a flash of the dark default.
+        try {
+            if (localStorage.getItem('theme') === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        } catch (e) {}
+    </script>
 </head>
-<ul class="nav">
-    <li><a href="/"> About</a></li>
-    <li><a href="/cv"> CV</a></li>
-    <li><a href="/contact"> Contact</a></li>
-    <li><a href="/blog"> Blog</a></li>
-</ul>
 <body>
+    <header>
+        <ul class="nav">
+            <li><a href="/"> About</a></li>
+            <li><a href="/publications"> Publications</a></li>
+            <li><a href="/assets/cv/cv_leander_girrbach.pdf" download> CV</a></li>
+            <li>
+                <button class="theme-toggle" type="button" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </li>
+        </ul>
+    </header>
+    
     <main class="page-content">
         {{ content }}
     </main>
+
+    <footer class="footer">
+        <ul>
+            <li><a href="https://github.com/LGirrbach" target="_blank" rel="noopener noreferrer"> <img src="/assets/figures/github-mark/github-mark/github-mark.svg" alt="GitHub"> GitHub</a></li>
+            <li><a href="https://de.linkedin.com/in/leander-girrbach-6b4b52251" target="_blank" rel="noopener noreferrer"> <img src="/assets/figures/LinkedIn-Logos/LI-In-Bug.png" alt="LinkedIn"> LinkedIn</a></li>
+            <li><a href="https://scholar.google.de/citations?user=xk6HHiAAAAAJ" target="_blank" rel="noopener noreferrer"> <img src="/assets/figures/google-scholar/google-scholar.svg" alt="Google Scholar"> Google Scholar</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        document.querySelector('.theme-toggle').addEventListener('click', function () {
+            var root = document.documentElement;
+            var isLight = root.getAttribute('data-theme') === 'light';
+            if (isLight) {
+                root.removeAttribute('data-theme');
+            } else {
+                root.setAttribute('data-theme', 'light');
+            }
+            try { localStorage.setItem('theme', isLight ? 'dark' : 'light'); } catch (e) {}
+        });
+    </script>
 </body>
-<div class="footer">
-    <ul class="footer">
-        <!-- <li><strong>Follow me:</strong></li> -->
-        <li><a href="https://github.com/LGirrbach"> <img src="/assets/figures/github-mark/github-mark/github-mark.svg"> <strong>GitHub</strong></a></li>
-        <li><a href="https://de.linkedin.com/in/leander-girrbach-6b4b52251"> <img src="/assets/figures/LinkedIn-Logos/LI-In-Bug.png"><strong>LinkedIn</strong></a></li>
-    </ul>
-  </div>
 </html>
